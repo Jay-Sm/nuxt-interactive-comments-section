@@ -9,7 +9,22 @@ module.exports = {
     "./app.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        rubik: "Rubik",
+      },
+    },
+    colors: {
+      white: "#ffffff",
+      "theme-blue": "#5457b6",
+      "light-theme-blue": "#c3c4ef",
+      "dark-blue": "#324152",
+      "grayish-blue": "#67727e",
+      "error-red": "#ed6468",
+      "pale-red": " #ffb8bb",
+      "very-light-gray": "#eaecf1",
+      "background-gray": "#f5f6fa",
+    },
   },
   plugins: [],
-}
+};

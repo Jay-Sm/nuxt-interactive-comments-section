@@ -1,0 +1,15 @@
+:root {
+  @apply font-rubik text-base;
+}
+
+html {
+  @apply h-screen;
+}
+
+body {
+  @apply h-full bg-background-gray;
+}
+
+#__nuxt {
+  @apply h-full flex items-start justify-center;
+}
