@@ -1,8 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap");
 
 @import "root.css";
-@import "index.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.blue-text {
+  @apply text-theme-blue font-bold;
+}
+
+.light-blue-text {
+  @apply text-light-theme-blue font-bold cursor-pointer;
+}

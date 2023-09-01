@@ -1,7 +1,0 @@
-.blue-text {
-  @apply text-theme-blue font-bold;
-}
-
-.light-blue-text {
-  @apply text-light-theme-blue font-bold cursor-pointer;
-}
