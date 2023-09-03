@@ -1,6 +1,6 @@
 <template>
   <div>
-    <commentFeed />
+    <postFeed />
   </div>
 
   <inputField />

@@ -15,7 +15,7 @@
                 <div class="bg-grayish-blue text-white w-7 h-7 rounded-full flex justify-center items-center text-xs">img
                 </div>
               </div>
-              <p class="font-medium text-dark-blue">John Doe</p>
+              <p class="font-medium text-dark-blue">{{ post.username }}</p>
               <p class="text-grayish-blue select-none">0 Seconds Ago</p>
             </div>
 
@@ -56,7 +56,7 @@
                 </div>
               </div>
 
-              <div class="text-grayish-blue">{{ reply.content}}</div>
+              <div class="text-grayish-blue">{{ reply.content }}</div>
             </div>
           </div>
         </div>
@@ -69,8 +69,33 @@
 </template>
 
 <script setup>
+import { db } from '../firebase'
+import { collection, query, getDocs } from "firebase/firestore";
+const postsRef = collection(db, "posts")
 
-import posts from '../data/posts.json'
+
+const posts = ref([])
+
+async function updatePostFeed() {
+  const q = query(postsRef)
+  const querySnapshot = await getDocs(q);
+
+  querySnapshot.forEach(post => {
+    const newPost = {
+      owner: post.data().owner,
+      votes: post.data().votes,
+      username: post.data().username,
+      profile_img: post.data().profile_img,
+      timestamp: post.data().timestamp,
+      content: post.data().content,
+      replies: []
+    }
+
+    console.log(newPost)
+    posts.value.push(newPost)
+  });
+}
+updatePostFeed()
 
 
 
