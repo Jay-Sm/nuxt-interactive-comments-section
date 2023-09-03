@@ -15,7 +15,7 @@
                 </div>
               </div>
               <p class="font-medium text-dark-blue">{{ post.username }}</p>
-              <p class="text-grayish-blue select-none">0 Seconds Ago</p>
+              <p class="text-grayish-blue">{{ unixConversion(post.timestamp.seconds) }}</p>
             </div>
 
             <div class="flex items-center gap-x-2 cursor-pointer">

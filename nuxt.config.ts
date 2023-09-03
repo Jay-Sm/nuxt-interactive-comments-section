@@ -10,6 +10,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
+      title: "Interactive Comment Section | Frontend Mentor",
       link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }]
     }
   },
