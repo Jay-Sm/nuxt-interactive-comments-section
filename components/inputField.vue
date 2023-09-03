@@ -36,7 +36,7 @@ const active = ref(false)
 const newPost = ref('Test Lorem')
 
 function addPost() {
-  const docRef = addDoc(postsRef, {
+  addDoc(postsRef, {
     owner: "uid_here",
     votes: 0,
     username: "username_here",
@@ -45,6 +45,7 @@ function addPost() {
     content: newPost.value,
     replies: []
   });
+  newPost.value = ""
 }
 
 watchEffect(() => {
