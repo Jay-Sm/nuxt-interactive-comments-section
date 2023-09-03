@@ -1,9 +1,11 @@
 <template>
-  <div class="h-[10.6rem] fixed left-0 right-0 flex flex-col justify-center items-center transition-[bottom] duration-[300ms]"
+  <div
+    class="h-[10.6rem] fixed left-0 right-0 flex flex-col justify-center items-center transition-[bottom] duration-[300ms]"
     :class="{ 'bottom-3': active }, { '-bottom-[8.5rem]': !active }">
     <button @click="active = !active"
       class="-mb-6 bg-theme-blue min-w-[2.5rem] max-w-[2.5rem] min-h-[2.5rem] max-h-[2.5rem] rounded-full flex items-center justify-center box-border relative z-10">
-      <img src="../assets/images/icons/up-icon.svg" class="w-[2rem] transition-[all] duration-[500ms]" :class="{ 'rotate-180': active }">
+      <img src="../assets/images/icons/up-icon.svg" class="w-[2rem] transition-[all] duration-[500ms]"
+        :class="{ 'rotate-180': active }">
     </button>
 
     <div class="max-w-[50rem] min-w-[35rem] w-[50rem] mx-8 h-[85%] p-5 bg-white rounded-lg flex gap-x-4">
@@ -14,10 +16,11 @@
       </div>
       <div class="relative w-full">
         <textarea name="" placeholder="Add a comment..."
-          class="w-full h-full border-2 border-very-light-gray rounded-md resize-none placeholder:text-[#aab0ba] pt-1 pl-3"></textarea>
+          class="w-full h-full border-2 border-very-light-gray rounded-md resize-none placeholder:text-[#aab0ba] pt-1 pl-3"
+          v-model="newPost"></textarea>
       </div>
       <div class="flex items-center">
-        <button
+        <button @click="addPost()"
           class="font-medium text-white bg-theme-blue rounded-md py-3 px-8 hover:opacity-80 active:opacity-50 transition-opacity">SEND</button>
       </div>
     </div>
@@ -25,9 +28,30 @@
 </template>
 
 <script setup>
+import { db } from '../firebase'
+import { collection, addDoc } from "firebase/firestore";
+const postsRef = collection(db, "posts")
 
 const active = ref(false)
+const newPost = ref('Test Lorem')
 
+function addPost() {
+  const docRef = addDoc(postsRef, {
+    owner: "uid_here",
+    votes: 0,
+    username: "username_here",
+    profile_img: "img_path_here",
+    timestamp: new Date(),
+    content: newPost.value,
+    replies: []
+  });
+}
+
+watchEffect(() => {
+  if (newPost.value.length > 800) {
+    newPost.value = newPost.value.substring(0, 800);
+  }
+})
 </script>
 
 

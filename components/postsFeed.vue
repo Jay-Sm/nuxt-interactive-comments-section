@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-col gap-y-10 justify-center pb-20 pt-8 px-12">
-
     <div v-for="post in posts" :key="post.timestamp" class="flex flex-col gap-y-6 min-w-[30rem] max-w-[45rem]">
       <div class="w-full p-5 bg-white rounded-lg flex shadow-md">
         <div class="h-20 mr-4 px-2 flex flex-col justify-between items-center bg-background-gray rounded-lg">
@@ -62,9 +61,6 @@
         </div>
       </div>
     </div>
-
-
-
   </div>
 </template>
 
@@ -79,6 +75,7 @@ const posts = ref([])
 async function updatePostFeed() {
   const q = query(postsRef)
   const querySnapshot = await getDocs(q);
+  posts.value = []
 
   querySnapshot.forEach(post => {
     const newPost = {
@@ -90,8 +87,6 @@ async function updatePostFeed() {
       content: post.data().content,
       replies: []
     }
-
-    console.log(newPost)
     posts.value.push(newPost)
   });
 }
