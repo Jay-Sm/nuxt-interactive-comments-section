@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-y-10 justify-center pb-20 pt-8 px-12 js-feed">
+  <div class="flex flex-col gap-y-10 justify-center pb-20 pt-8 px-[4.8rem] js-feed">
     <div v-for="post in posts" :key="post.timestamp" class="flex flex-col gap-y-6 min-w-[30rem] max-w-[45rem]">
       <div class="w-full p-5 bg-white rounded-lg flex shadow-md">
         <div class="h-20 mr-4 px-2 flex flex-col justify-between items-center bg-background-gray rounded-lg">

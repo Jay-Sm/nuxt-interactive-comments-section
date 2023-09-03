@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-[10.6rem] fixed left-0 right-0 flex flex-col justify-center items-center transition-[bottom] duration-[300ms]"
+    class="h-[10.6rem] fixed left-0 right-0 flex flex-col justify-center items-center transition-[bottom] duration-[300ms] px-10"
     :class="{ 'bottom-3': active }, { '-bottom-[8.5rem]': !active }">
     <button @click="active = !active"
       class="-mb-6 bg-theme-blue min-w-[2.5rem] max-w-[2.5rem] min-h-[2.5rem] max-h-[2.5rem] rounded-full flex items-center justify-center box-border relative z-10">
@@ -8,7 +8,7 @@
         :class="{ 'rotate-180': active }">
     </button>
 
-    <div class="max-w-[50rem] min-w-[35rem] w-[50rem] mx-8 h-[85%] p-5 bg-white rounded-lg flex gap-x-4">
+    <div class="max-w-[50rem] min-w-[35rem] w-full h-[85%] p-5 bg-white rounded-lg flex gap-x-4">
       <div>
         <div class="bg-grayish-blue text-white w-10 h-10 rounded-full flex justify-center items-center text-xs">
           img

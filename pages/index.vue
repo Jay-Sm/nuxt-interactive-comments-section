@@ -1,4 +1,6 @@
 <template>
+  <signUp />
+
   <div>
     <postsFeed />
   </div>
