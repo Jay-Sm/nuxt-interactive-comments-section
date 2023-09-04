@@ -3,7 +3,8 @@
     class="h-[10.6rem] fixed left-0 right-0 flex flex-col justify-center items-center transition-[bottom] duration-[300ms] px-10"
     :class="{ 'bottom-3': active }, { '-bottom-[8.5rem]': !active }">
     <button @click="active = !active"
-      class="-mb-6 bg-theme-blue min-w-[2.5rem] max-w-[2.5rem] min-h-[2.5rem] max-h-[2.5rem] rounded-full flex items-center justify-center box-border relative z-10">
+      class="-mb-6 bg-theme-blue min-w-[2.5rem] max-w-[2.5rem] min-h-[2.5rem] max-h-[2.5rem] rounded-full flex items-center justify-center box-border relative z-10 disabled:bg-grayish-blue disabled:cursor-not-allowed"
+      :disabled=!loggedIn>
       <img src="../assets/images/icons/up-icon.svg" class="w-[2rem] transition-[all] duration-[500ms]"
         :class="{ '-rotate-180': active }">
     </button>
@@ -15,8 +16,7 @@
         </div>
       </div>
       <div class="relative w-full">
-        <textarea name="" placeholder="Add a comment..."
-          class="w-full h-full input resize-none pt-1 pl-3"
+        <textarea name="" placeholder="Add a comment..." class="w-full h-full input resize-none pt-1 pl-3"
           v-model="newPost"></textarea>
       </div>
       <div class="flex items-center">
@@ -28,19 +28,38 @@
 </template>
 
 <script setup>
-import { db } from '../firebase'
+import { db, auth } from '../firebase'
 import { collection, addDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth"
 const postsRef = collection(db, "posts")
 
 const active = ref(false)
 const newPost = ref('Test Lorem')
 
+
+const loggedIn = ref(false)
+watchEffect(() => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      loggedIn.value = true
+      console.log(loggedIn.value)
+    } else {
+      loggedIn.value = false
+      active.value = false
+      console.log(loggedIn.value)
+    }
+  });
+})
+
+// Posting
 function addPost() {
+  const user = auth.currentUser;
+
   addDoc(postsRef, {
-    owner: "uid_here",
+    owner: user.uid,
     votes: 0,
-    username: "username_here",
-    profile_img: "img_path_here",
+    username: user.displayName,
+    profile_img: user.photoURL,
     timestamp: new Date(),
     content: newPost.value,
     replies: []

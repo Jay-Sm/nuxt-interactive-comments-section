@@ -75,7 +75,7 @@ watchEffect(() => {
   });
 })
 
-// Sign Up or Log In with Email
+// Sign Up or Log In
 const signUpUsername = ref('John')
 const signUpEmail = ref('mail@mail.com')
 const signUpPassword = ref('password1234')
@@ -114,7 +114,6 @@ function signInUser() {
 }
 
 // Log out or Delete Account
-
 function logOutUser() {
   signOut(auth).then(() => {
     console.log('User Signed Out')
