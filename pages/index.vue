@@ -1,7 +1,7 @@
 <template>
   <signUp />
 
-  <div>
+  <div class="w-[60%] flex justify-center">
     <postsFeed />
   </div>
 

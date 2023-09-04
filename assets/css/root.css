@@ -4,6 +4,12 @@
 
 html {
   @apply h-screen;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 body {

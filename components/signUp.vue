@@ -12,15 +12,15 @@
 
     <div class="fixed top-[2.5rem] right-[2rem] w-[20rem] bg-white flex flex-col gap-y-4 pt-7 pb-10 rounded-md">
 
-      <div v-if="loggedIn" class="flex flex-row justify-between items-center pl-3 pr-5">
+      <div v-if="loggedIn" class="flex flex-row justify-start items-center">
         <div>
-          <div class="bg-grayish-blue text-white w-16 h-16 rounded-full flex justify-center items-center">
+          <div class="bg-grayish-blue text-white w-16 h-16 mx-5 rounded-full flex justify-center items-center">
             img
           </div>
         </div>
         <div>
-          <div><span class="font-bold">Username:</span> username_here</div>
-          <div><span class="font-bold">Created On:</span> date_here</div>
+          <div><span class="font-bold">Username: </span>{{ user.displayName }}</div>
+          <div><span class="font-bold">Created On: </span>date_here</div>
         </div>
       </div>
 
@@ -62,7 +62,7 @@
 import { auth } from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
 const menuOpen = ref(true)
-
+const user = auth.currentUser;
 
 const loggedIn = ref(false)
 watchEffect(() => {
