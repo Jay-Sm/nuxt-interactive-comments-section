@@ -42,11 +42,9 @@ watchEffect(() => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       loggedIn.value = true
-      console.log(loggedIn.value)
     } else {
       loggedIn.value = false
       active.value = false
-      console.log(loggedIn.value)
     }
   });
 })

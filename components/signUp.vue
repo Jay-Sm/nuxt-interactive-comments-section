@@ -60,7 +60,7 @@
 
 <script setup>
 import { auth } from '../firebase'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
 const menuOpen = ref(true)
 
 
@@ -83,6 +83,16 @@ function signUpUser() {
   createUserWithEmailAndPassword(auth, signUpEmail.value, signUpPassword.value)
     .then((userCred) => {
       const user = userCred.user;
+
+      updateProfile(auth.currentUser, {
+        displayName: signUpUsername.value
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        console.error(errorCode)
+        console.error(errorMessage)
+      });
 
       console.log('Signed In', user)
     })

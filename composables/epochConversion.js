@@ -1,6 +1,6 @@
-function unixConversion(unixTime, now) {
+function epochConversion(epochTime, now) {
   const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
-  const timeDifference = currentTime - unixTime;
+  const timeDifference = currentTime - epochTime;
 
   if (timeDifference < 5) {
     return "A few seconds ago";
@@ -27,4 +27,4 @@ function unixConversion(unixTime, now) {
   }
 }
 
-export { unixConversion };
+export { epochConversion };
