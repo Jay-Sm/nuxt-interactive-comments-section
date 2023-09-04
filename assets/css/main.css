@@ -13,3 +13,11 @@
 .light-blue-text {
   @apply text-light-theme-blue font-bold cursor-pointer;
 }
+
+.red-button {
+  @apply max-w-fit bg-error-red p-2 text-white rounded-md;
+}
+
+.input {
+  @apply border-2 border-very-light-gray rounded-md placeholder:text-[#aab0ba]
+}
