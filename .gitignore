@@ -27,6 +27,6 @@ logs
 
 firebase.json
 .firebaserc
-.rules
+*.rules
 *.rule
 *.indexes.json
