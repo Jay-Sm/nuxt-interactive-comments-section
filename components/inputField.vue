@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { db, auth } from '../firebase'
+import { db, auth } from '~/firebase/'
 import { collection, addDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth"
 const postsRef = collection(db, "posts")

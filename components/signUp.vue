@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { auth } from "~/firebase";
+import { auth } from "~/firebase/";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
 const menuOpen = ref(false)
 const user = auth.currentUser;
