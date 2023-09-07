@@ -65,6 +65,7 @@
 </template>
 
 <script setup>
+import { epochConversion } from '~/composables/epochConversion';
 import { db } from '../firebase'
 import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 const postsRef = collection(db, "posts")

@@ -19,7 +19,7 @@
           </div>
         </div>
         <div>
-          <div><span class="font-bold">Username: </span>{{ user.displayName }}</div>
+          <div><span class="font-bold">Username: </span>{{ userDisplayName }}</div>
           <div><span class="font-bold">Created On: </span>date_here</div>
         </div>
       </div>
@@ -53,16 +53,20 @@
           Sign Up
         </button>
       </form>
-
     </div>
   </div>
 </template>
 
 <script setup>
-import { auth } from '../firebase'
+import { auth } from "~/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
-const menuOpen = ref(true)
+const menuOpen = ref(false)
 const user = auth.currentUser;
+
+const userDisplayName = ref('')
+onAuthStateChanged(auth, (user) => {
+  userDisplayName.value = user.displayName
+})
 
 const loggedIn = ref(false)
 watchEffect(() => {
@@ -134,8 +138,6 @@ function logOutUser() {
     const errorMessage = error.message;
   });
 }
-
-
 
 </script>
 
