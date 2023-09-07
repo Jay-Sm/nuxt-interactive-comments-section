@@ -11,7 +11,8 @@
           <div class="flex justify-between py-2">
             <div class="flex items-center gap-x-4">
               <div>
-                <div class="bg-grayish-blue text-white w-7 h-7 rounded-full flex justify-center items-center text-xs">img
+                <div class="w-7 h-7 flex justify-center items-center text-xs">
+                  <img :src="post.profile_img" class="js-profile-img w-full h-full rounded-full">
                 </div>
               </div>
               <p class="font-medium text-dark-blue">{{ post.username }}</p>
@@ -66,8 +67,9 @@
 
 <script setup>
 import { epochConversion } from '~/composables/epochConversion';
-import { db } from '~/firebase/'
+import { db, storage } from '~/firebase/'
 import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
+import { ref as storageRef, getDownloadURL } from "firebase/storage";
 const postsRef = collection(db, "posts")
 
 
@@ -78,11 +80,26 @@ onSnapshot(q, (querySnapshot) => {
   posts.value = []
 
   querySnapshot.forEach(post => {
+    const userProfileImagePathRef = storageRef(storage, post.data().profile_img);
+    const postProfilePath = ref('')
+
+    getDownloadURL(userProfileImagePathRef)
+      .then((url) => {
+        postProfilePath.value = url
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        console.error(errorCode)
+        console.error(errorMessage)
+      });
+
     const newPost = {
       owner: post.data().owner,
       votes: post.data().votes,
       username: post.data().username,
-      profile_img: post.data().profile_img,
+      profile_img: postProfilePath,
       timestamp: post.data().timestamp,
       content: post.data().content,
       replies: []

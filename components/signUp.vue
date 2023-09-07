@@ -14,13 +14,13 @@
 
       <div v-if="loggedIn" class="flex flex-row justify-start items-center">
         <div>
-          <div class="bg-grayish-blue text-white w-16 h-16 mx-5 rounded-full flex justify-center items-center">
-            img
+          <div class="w-16 h-16 mx-5 flex justify-center items-center">
+            <img :src="profileFilePath" class="js-profile-img w-full h-full rounded-full">
           </div>
         </div>
         <div>
           <div><span class="font-bold">Username: </span>{{ userDisplayName }}</div>
-          <div><span class="font-bold">Created On: </span>date_here</div>
+          <!-- <div><span class="font-bold">Created On: </span>date_here</div> -->
         </div>
       </div>
 
@@ -58,26 +58,45 @@
 </template>
 
 <script setup>
-import { auth } from "~/firebase/";
+import { auth, storage } from "~/firebase/";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
+import { ref as storageRef, getDownloadURL } from "firebase/storage";
 const menuOpen = ref(false)
 const user = auth.currentUser;
 
+const profileFilePath = ref(``)
+onAuthStateChanged(auth, (user) => {
+  const userProfileImagePathRef = storageRef(storage, user.photoURL);
+
+  getDownloadURL(userProfileImagePathRef)
+    .then((url) => {
+      profileFilePath.value = url
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      console.error(errorCode)
+      console.error(errorMessage)
+    });
+})
+
+
+// User state handling
 const userDisplayName = ref('')
 onAuthStateChanged(auth, (user) => {
   userDisplayName.value = user.displayName
 })
 
 const loggedIn = ref(false)
-watchEffect(() => {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      loggedIn.value = true
-    } else {
-      loggedIn.value = false
-    }
-  });
-})
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    loggedIn.value = true
+  } else {
+    loggedIn.value = false
+  }
+});
+
 
 // Sign Up or Log In
 const signUpUsername = ref('John')
@@ -89,7 +108,7 @@ function signUpUser() {
       const user = userCred.user;
 
       updateProfile(auth.currentUser, {
-        displayName: signUpUsername.value
+        displayName: signUpUsername.value, photoURL: 'gs://nuxt-interactive-comments-crud.appspot.com/user_profiles/guest.png'
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;

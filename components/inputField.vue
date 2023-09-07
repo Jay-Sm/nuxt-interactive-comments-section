@@ -11,8 +11,8 @@
 
     <div class="max-w-[50rem] min-w-[35rem] w-full h-[85%] p-5 bg-white rounded-lg flex gap-x-4">
       <div>
-        <div class="bg-grayish-blue text-white w-10 h-10 rounded-full flex justify-center items-center text-xs">
-          img
+        <div class="w-10 h-10 flex justify-center items-center text-xs">
+          <img :src="profileFilePath" class="js-profile-img w-full h-full rounded-full">
         </div>
       </div>
       <div class="relative w-full">
@@ -28,9 +28,10 @@
 </template>
 
 <script setup>
-import { db, auth } from '~/firebase/'
+import { db, auth, storage } from '~/firebase/'
 import { collection, addDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth"
+import { ref as storageRef, getDownloadURL } from "firebase/storage";
 const postsRef = collection(db, "posts")
 
 const active = ref(false)
@@ -47,6 +48,23 @@ watchEffect(() => {
       active.value = false
     }
   });
+})
+
+const profileFilePath = ref(``)
+onAuthStateChanged(auth, (user) => {
+  const userProfileImagePathRef = storageRef(storage, user.photoURL);
+
+  getDownloadURL(userProfileImagePathRef)
+    .then((url) => {
+      profileFilePath.value = url
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      console.error(errorCode)
+      console.error(errorMessage)
+    });
 })
 
 // Posting
