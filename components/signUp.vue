@@ -62,7 +62,7 @@ import { auth, storage } from "~/firebase/";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "firebase/auth";
 import { ref as storageRef, getDownloadURL } from "firebase/storage";
 const menuOpen = ref(false)
-const user = auth.currentUser;
+// const user = auth.currentUser;
 
 const profileFilePath = ref(``)
 onAuthStateChanged(auth, (user) => {

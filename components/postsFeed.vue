@@ -3,9 +3,9 @@
     <div v-for="post in posts" :key="post.timestamp" class="flex flex-col gap-y-6 min-w-[30rem] w-full max-w-[60rem]">
       <div class="w-full p-5 bg-white rounded-lg flex shadow-md">
         <div class="h-20 mr-4 px-2 flex flex-col justify-between items-center bg-background-gray rounded-lg">
-          <div class="light-blue-text">+</div>
+          <button @click="addVote(true, post.post_id)" class="light-blue-text">+</button>
           <div class="blue-text">{{ post.votes }}</div>
-          <div class="light-blue-text">-</div>
+          <button @click="addVote(false, post.post_id)" class="light-blue-text">-</button>
         </div>
         <div class="w-full">
           <div class="flex justify-between py-2">
@@ -61,12 +61,14 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
 
 <script setup>
 import { epochConversion } from '~/composables/epochConversion';
+import { addVote } from '~/composables/addVote';
 import { db, storage } from '~/firebase/'
 import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import { ref as storageRef, getDownloadURL } from "firebase/storage";
@@ -97,6 +99,7 @@ onSnapshot(q, (querySnapshot) => {
 
     const newPost = {
       owner: post.data().owner,
+      post_id: post.id,
       votes: post.data().votes,
       username: post.data().username,
       profile_img: postProfilePath,
@@ -105,6 +108,7 @@ onSnapshot(q, (querySnapshot) => {
       replies: []
     }
     posts.value.push(newPost)
+    // console.log(newPost.post_id)
   });
 });
 </script>
